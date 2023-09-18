@@ -31,4 +31,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Success!
-echo "Image pushed to GitHub successfully"
+echo "Image pushed to GitHub successfully!"
