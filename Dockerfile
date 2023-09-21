@@ -1,24 +1,34 @@
-# set base image (host OS)
+# Set the base image (host OS)
 FROM python:3.8
-# --- NETFREE CERT INTSALL ---
-# ADD https://netfree.link/dl/unix-ca.sh /home/netfree-unix-ca.sh 
-# RUN cat  /home/netfree-unix-ca.sh | sh
-# ENV NODE_EXTRA_CA_CERTS=/etc/ca-bundle.crt
-# ENV REQUESTS_CA_BUNDLE=/etc/ca-bundle.crt
-# ENV SSL_CERT_FILE=/etc/ca-bundle.crt
-# --- END NETFREE CERT INTSALL ---
+
+# Set the environment variable for Flask to development mode
 ENV FLASK_ENV development
-# set the working directory in the container
+
+# Set the working directory in the container
 WORKDIR /chatApp
-# copy the dependencies file to the working directory
+
+# Copy the dependencies file (requirements.txt) to the working directory
 COPY requirements.txt .
+
+# Set the timezone environment variable to 'Israel'
 ENV TZ 'Israel'
-# install dependencies
+
+# Install Python dependencies from the requirements.txt file
 RUN pip install -r requirements.txt
+
+# Set the data directory environment variable
 ENV DATA_DIR='./data/'
+
+# Set the rooms directory environment variable based on DATA_DIR
 ENV ROOMS_DIR=${DATA_DIR}'rooms/'
-# copy the content of the local src directory to the working directory
+
+# Add a health check that runs every 10 seconds and times out after 3 seconds
+HEALTHCHECK --interval=10s --timeout=3s CMD curl -f http://localhost:5000/health || exit 1
+
+# Copy the content of the local directory to the working directory in the container
 COPY . .
-# command to run on container start
+
+# Define the command to run when the container starts
 CMD [ "python", "./chatApp.py" ]
+
 
