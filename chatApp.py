@@ -118,6 +118,7 @@ def chat_room(room):
     # Display the specified chat room with all messages sent
     return render_template('chat.html',room=room)
 
+# deleting all the messages in the room!
 # @app.route('/api/clear/<room>', methods=['POST','GET'])
 # def clear_room_data(room):
 #     if not session.get("user_name"):
@@ -152,9 +153,6 @@ def updateChat(room):
     if request.method == 'POST':
         msg = request.form['msg']
         if "user_name" in session:
-            # Get the current date and time
-            # current_datetime = datetime.datetime.now()
-            # Format the date and time as a string
             formatted_datetime = datetime.datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
             with open(filename,"a") as file:
                 file.write("\n"+formatted_datetime+"   "+session.get('user_name')+": "+msg)
