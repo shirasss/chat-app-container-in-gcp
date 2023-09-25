@@ -58,7 +58,7 @@ if [[ "$push_choice" == "Y" || "$push_choice" == "y" ]]; then
         echo "Error pushing image to GitHub"
         exit 1
     fi
-    echo "Image pushed to GitHub successfully"
+    echo "tag pushed to GitHub successfully"
 elif [[ "$push_choice" == "N" || "$push_choice" == "n" ]]; then
     echo "Tagging and pushing to GitHub skipped."
 else
