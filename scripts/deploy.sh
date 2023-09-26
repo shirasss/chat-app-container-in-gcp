@@ -65,14 +65,19 @@ else
     echo "Invalid choice ---> (not tagging and pushing to GitHub)."
 fi
 
-
 # Push the Docker image to Artifact Registry (optional)
-echo "Pushing Docker image to artifactregistry"
-gcloud config set auth/impersonate_service_account artifact-admin-sa@grunitech-mid-project.iam.gserviceaccount.com	
-gcloud auth configure-docker me-west1-docker.pkg.dev
-docker tag ${appname}:${version} me-west1-docker.pkg.dev/grunitech-mid-project/efrat-chat-app-images/${appname}:${version}
-docker push me-west1-docker.pkg.dev/grunitech-mid-project/efrat-chat-app-images/${appname}:${version}
-echo "Done!"
+echo "Do you want to push to GCR?"
+echo "enter Y|y or N|n"
+read push_to_gcr
+if [[ "$push_to_gcr" == "Y" || "$push_to_gcr" == "y" ]]; then
+   gcloud config set auth/impersonate_service_account artifact-admin-sa@grunitech-mid-project.iam.gserviceaccount.com	
+   gcloud auth configure-docker me-west1-docker.pkg.dev
+   artifact_registry_image=me-west1-docker.pkg.dev/grunitech-mid-project/shira-shani-chat-app-images/${appname}:${version}
+   docker tag ${image_name} ${artifact_registry_image} 
+   docker push ${artifact_registry_image}
+else
+    echo "not pushing to GCR"
+fi       
 
 
 #====================================================
