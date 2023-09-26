@@ -44,7 +44,6 @@ if [ -n "$commit_hash" ] && ! git rev-parse --verify "$commit_hash" &>/dev/null;
     echo "Error: The specified commit hash does not exist."
     exit 1
 fi
-
 # Ask the user if they want to tag and push to GitHub
 read -p "Do you want to tag and push to GitHub? enter [y|Y] if you want otherwise
 enter [n|N]: " push_choice
@@ -67,7 +66,13 @@ else
 fi
 
 
-
+# Push the Docker image to Artifact Registry (optional)
+echo "Pushing Docker image to artifactregistry"
+gcloud config set auth/impersonate_service_account artifact-admin-sa@grunitech-mid-project.iam.gserviceaccount.com	
+gcloud auth configure-docker me-west1-docker.pkg.dev
+docker tag ${appname}:${version} me-west1-docker.pkg.dev/grunitech-mid-project/efrat-chat-app-images/${appname}:${version}
+docker push me-west1-docker.pkg.dev/grunitech-mid-project/efrat-chat-app-images/${appname}:${version}
+echo "Done!"
 
 
 #====================================================
