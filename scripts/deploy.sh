@@ -75,6 +75,7 @@ if [[ "$push_to_gcr" == "Y" || "$push_to_gcr" == "y" ]]; then
    artifact_registry_image=me-west1-docker.pkg.dev/grunitech-mid-project/shira-shani-chat-app-images/${appname}:${version}
    docker tag ${image_name} ${artifact_registry_image} 
    docker push ${artifact_registry_image}
+   gcloud config unset auth/impersonate_service_account
 else
     echo "not pushing to GCR"
 fi       
