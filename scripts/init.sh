@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "enter the version to build and run: "  version
+read -p "enter the version to run: "  version
 
 appname="chat-app"
 image_name="${appname}:${version}"
