@@ -70,7 +70,7 @@ echo "Do you want to push to GCR?"
 echo "enter Y|y or N|n"
 read push_to_gcr
 if [[ "$push_to_gcr" == "Y" || "$push_to_gcr" == "y" ]]; then
-   gcloud config set auth/impersonate_service_account artifact-admin-sa@grunitech-mid-project.iam.gserviceaccount.com	
+   gcloud config set auth/impersonate_service_account artifact-admin-sa@grunitech-mid-project.iam.gserviceaccount.com 	
    gcloud auth configure-docker me-west1-docker.pkg.dev
    artifact_registry_image=me-west1-docker.pkg.dev/grunitech-mid-project/shira-shani-chat-app-images/${appname}:${version}
    docker tag ${image_name} ${artifact_registry_image} 
